@@ -24,30 +24,6 @@ yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.
 ## Install Terraform
 yum install terraform -y
 
-echo "########################
-##  AZURE CLI INSTALL ##
-########################"
-
-## RPM package import from Microsoft
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
-
-## Create local azure-cli repository information.
-sh -c 'echo -e "[azure-cli]
-name=Azure CLI
-baseurl=https://packages.microsoft.com/yumrepos/azure-cli
-enabled=1
-gpgcheck=1
-gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
-
-## Install with the yum install command.
-yum install azure-cli
-
-## Add azure-devops extension to the azure cli
-az extension add --name azure-devops
-
-## Show output of az version
-az --version
-
 echo "######################
 ##  ANSIBLE INSTALL ##
 ######################"
@@ -80,3 +56,5 @@ tfenv install 1.0.0
 ## tfenv set version
 tfenv use 1.0.0
 
+## Exit the Shell script
+exit
