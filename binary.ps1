@@ -5,7 +5,7 @@
 
 $tempfolder = "C:\temp\"
 $logFile = "c:\temp\" + (get-date -format 'yyyyMMdd') + '_aibsoftwareinstall.log'
-$sasToken  = "sp=racwdyti&st=2021-11-23T05:52:23Z&se=2022-04-22T13:52:23Z&spr=https&sv=2020-08-04&sr=b&sig=V2zVrbnFddRAfhMbkgigOnb%2BWI1Io7jYMa1To3EF1GA%3D"
+$sasToken  = "sp=racwdyti&st=2021-11-23T12:04:05Z&se=2022-07-07T20:04:05Z&spr=https&sv=2020-08-04&sr=b&sig=TWRwaBbQkIHbHobDd0RIzg%2Bvqqbbxf93JZs2di5oHdc%3D"
 $storageAccountName = "saswtransac1sacha"
 $containerName = "softwarefiles"
 $swblobname="software.zip"
