@@ -86,7 +86,7 @@ catch {
 #########################
 
 try {
-    Start-Process -FilePath "$downloadsFolder\software\readerdc64_en_xa_crd_install.exe" -Wait -ArgumentList "/sAll /rs /rps /msi /norestart /quiet EULA_ACCEPT=YES"
+    Start-Process -FilePath "$downloadsFolder\software\AcroRdrDC2100720099_en_US.exe" -Wait -ArgumentList "/sAll /rs /rps /msi /norestart /quiet EULA_ACCEPT=YES"
     # Wait for the installation to finish.
     # display in powershell the output of the command below
     if (Test-Path "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe") {
@@ -125,7 +125,7 @@ catch {
 ####################
 
 try {
-    Start-Process -FilePath "$downloadsFolder\software\WinSCP-5.19.3-Setup.exe" -Wait -ArgumentList "/VERYSILENT /NORESTART /ALLUSERS"
+    Start-Process -FilePath "$downloadsFolder\software\WinSCP-5.19.4-Setup.exe" -Wait -ArgumentList "/VERYSILENT /NORESTART /ALLUSERS"
     # Wait for the installation to finish.
     if (Test-Path "C:\Program Files (x86)\WinSCP\WinSCP.exe") {
         Write-Log "Winscp has been installed"
@@ -143,7 +143,7 @@ catch {
 ## INSTALL Visual Studio Code ##
 ################################
 
-Start-Process -FilePath "$downloadsFolder\software\VSCodeUserSetup-x64-1.61.2.exe" -Wait -ArgumentList "/VERYSILENT /NORESTART /MERGETASKS=!runcode"
+Start-Process -FilePath "$downloadsFolder\software\VSCodeSetup-x64-1.62.3.exe" -Wait -ArgumentList "/VERYSILENT /NORESTART /MERGETASKS=!runcode"
 # Wait for the installation to finish.
 if (Test-Path "C:\Program Files\Microsoft VS Code\Code.exe") {
     Write-Log "Visual Studio Code has been installed"
@@ -156,7 +156,7 @@ else {
 ## INSTALL Visual C++ RunTime ##
 ################################
 
-Start-Process -FilePath "$downloadsFolder\software\VC_redist.x86.exe" -Wait -ArgumentList "/install /quiet /norestart"
+Start-Process -FilePath "$downloadsFolder\software\vc_redist.x86.exe" -Wait -ArgumentList "/install /quiet /norestart"
 # Wait for the installation to finish.
 if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat") {
     Write-Log "Visual C++ Runtime has been installed"
@@ -169,6 +169,7 @@ else {
 ## INSTALL OpenSSH ##
 #####################
 
+Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH*'
 # Install the OpenSSH Client
 Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
 # Install the OpenSSH Server
