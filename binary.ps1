@@ -5,7 +5,7 @@
 
 $tempfolder = "C:\temp\"
 $logFile = "c:\temp\" + (get-date -format 'yyyyMMdd') + '_aibsoftwareinstall.log'
-$sasToken  = "sp=racwdyti&st=2021-11-22T23:19:18Z&se=2022-05-25T07:19:18Z&spr=https&sv=2020-08-04&sr=b&sig=jb9pJw59SdZ7EvXSyyhvJL3x71zTGCGjgrgMDukKyIU%3D"
+$sasToken  = "sp=racwdyti&st=2021-11-23T05:52:23Z&se=2022-04-22T13:52:23Z&spr=https&sv=2020-08-04&sr=b&sig=V2zVrbnFddRAfhMbkgigOnb%2BWI1Io7jYMa1To3EF1GA%3D"
 $storageAccountName = "saswtransac1sacha"
 $containerName = "softwarefiles"
 $swblobname="software.zip"
@@ -68,7 +68,7 @@ Unzip "$downloadsFolder\$swblobname" $downloadsFolder | Out-File $logFile -Appen
 #######################
 
 try {
-    Start-Process -filepath "$downloadsFolder\npp.8.1.7.Installer.x64.exe" -Wait -ErrorAction Stop -ArgumentList '/S'
+    Start-Process -filepath "$downloadsFolder\software\npp.8.1.9.Installer.exe" -Wait -ErrorAction Stop -ArgumentList '/S'
     if (Test-Path "C:\Program Files (x86)\Notepad++\notepad++.exe") {
         Write-Log "Notepad++ has been installed"
     }
@@ -86,10 +86,9 @@ catch {
 #########################
 
 try {
-    Start-Process -FilePath "$downloadsFolder\AcroRdrDC2100720099_en_US.exe" -ArgumentList "/sAll /rs /rps /msi /norestart /quiet EULA_ACCEPT=YES"
+    Start-Process -FilePath "$downloadsFolder\software\readerdc64_en_xa_crd_install.exe" -Wait -ArgumentList "/sAll /rs /rps /msi /norestart /quiet EULA_ACCEPT=YES"
     # Wait for the installation to finish.
     # display in powershell the output of the command below
-    Start-Sleep -s 180
     if (Test-Path "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe") {
         Write-Log "adobereader has been installed"
     }
@@ -107,9 +106,8 @@ catch {
 ##################
     
 try {
-    Start-Process -FilePath "$downloadsFolder\7z1900-x64.exe" -ArgumentList "/S"
+    Start-Process -FilePath "$downloadsFolder\software\7z1900-x64.exe" -Wait -ArgumentList "/S"
     # Wait for the installation to finish.
-    Start-Sleep -s 180
     if (Test-Path "C:\Program Files\7-Zip\7zFM.exe") {
         Write-Log "7ZIP has been installed"
     }
@@ -127,9 +125,8 @@ catch {
 ####################
 
 try {
-    Start-Process -FilePath "$downloadsFolder\WinSCP-5.19.3-Setup.exe" -ArgumentList "/VERYSILENT /NORESTART /ALLUSERS"
+    Start-Process -FilePath "$downloadsFolder\software\WinSCP-5.19.3-Setup.exe" -Wait -ArgumentList "/VERYSILENT /NORESTART /ALLUSERS"
     # Wait for the installation to finish.
-    Start-Sleep -s 120
     if (Test-Path "C:\Program Files (x86)\WinSCP\WinSCP.exe") {
         Write-Log "Winscp has been installed"
     }
@@ -146,9 +143,8 @@ catch {
 ## INSTALL Visual Studio Code ##
 ################################
 
-Start-Process -FilePath "$downloadsFolder\VSCodeSetup-x64-1.61.1.exe" -ArgumentList "/VERYSILENT /NORESTART /MERGETASKS=!runcode"
+Start-Process -FilePath "$downloadsFolder\software\VSCodeUserSetup-x64-1.61.2.exe" -Wait -ArgumentList "/VERYSILENT /NORESTART /MERGETASKS=!runcode"
 # Wait for the installation to finish.
-Start-Sleep -s 180
 if (Test-Path "C:\Program Files\Microsoft VS Code\Code.exe") {
     Write-Log "Visual Studio Code has been installed"
 }
@@ -160,9 +156,8 @@ else {
 ## INSTALL Visual C++ RunTime ##
 ################################
 
-Start-Process -FilePath "$downloadsFolder\VC_redist.x86.exe" -ArgumentList "/install /quiet /norestart"
+Start-Process -FilePath "$downloadsFolder\software\VC_redist.x86.exe" -Wait -ArgumentList "/install /quiet /norestart"
 # Wait for the installation to finish.
-Start-Sleep -s 180
 if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat") {
     Write-Log "Visual C++ Runtime has been installed"
 }
@@ -198,7 +193,7 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyCon
 ###################
 
 try {
-    Set-Location C:\temp\downloads\
+    Set-Location C:\temp\downloads\software
     MsiExec.exe /i putty-64bit-0.76-installer.msi /qn
     # Wait for the installation to finish.
     Start-Sleep -s 90
@@ -219,7 +214,7 @@ catch {
 ########################
 
 try {
-    Set-Location C:\temp\downloads\
+    Set-Location C:\temp\downloads\software
     MsiExec.exe /i SuperPuttySetup-1.4.0.9.msi /qn
     # Wait for the installation to finish.
     Start-Sleep -s 100
@@ -241,10 +236,9 @@ catch {
 ###################
 
 try {
-    $InstallerSQL = "$downloadsFolder\SSMS-Setup-ENU.exe"; 
-    Start-Process $InstallerSQL /Quiet
+    $InstallerSQL = "$downloadsFolder\software\SSMS-Setup-ENU.exe"; 
+    Start-Process $InstallerSQL /Quiet -Wait
     # Wait for the installation to finish.
-    Start-Sleep -s 300
     if (Test-Path "C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\ManagementStudio\Ssms.exe") {
         Write-Log "SQL MS studio has been installed"
     }
@@ -262,13 +256,13 @@ catch {
 ## INSTALL GIT ##
 #################
 
-    Start-Process -FilePath "$downloadsFolder\Git-2.33.1-64-bit.exe" -ArgumentList "/SILENT"
-    # Wait for the installation to finish
-    Start-Sleep -s 100
+Start-Process -FilePath "$downloadsFolder\software\Git-2.33.1-64-bit.exe" -Wait -ArgumentList "/SILENT"
+# Wait for the installation to finish
 
-###################################
+####################################
 ## COPY VS code extensions SCRIPT ##
-###################################
+####################################
+
 Copy-Item -Path "$downloadsFolder\*.vsix" -Destination "C:\Program Files\Microsoft VS Code\resources\app\extensions\" -Recurse
 
 
