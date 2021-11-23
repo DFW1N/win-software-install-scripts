@@ -28,6 +28,21 @@ echo "######################
 ##  ANSIBLE INSTALL ##
 ######################"
 
+yum install gcc glibc glibc-common gd gd-devel
+pip3 install --upgrade pip
+pip3 install ansible
+ansible-galaxy collection install azure.azcollection
+sudo curl -O https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
+pip3 install -r requirements-azure.txt
+pip3 install azure-mgmt-nspkg==3.0.1
+
+echo "################################
+##  WINRM PIP KERBEROS INSTALL ##
+#################################"
+
+sudo yum -y install python3-devel krb5-devel krb5-libs krb5-workstation
+pip3 install pywinrm[kerberos]
+
 ## Update RHEL
 yum update -y
 pip3 install ansible --user
