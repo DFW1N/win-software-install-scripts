@@ -28,24 +28,23 @@ echo "######################
 ##  ANSIBLE INSTALL ##
 ######################"
 
-## Download latest epel-rpm-release
-yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-
-## Apply rpm package
-rpm -i epel-release-latest-7.noarch.rpm
-
 ## Update RHEL
 yum update -y
-
-## Install Ansible
-yum install ansible -y
-
-## Check ansible is installed and in version
-ansible --version
+pip3 install ansible --user
+subscription-manager repos --enable ansible-2.8-for-rhel-8-x86_64-rpms
+dnf -y install ansible
 
 echo "####################
 ##  BREW INSTALLS ##
 ####################"
+
+## Install brew and all pre-req
+yum groupinstall 'Development Tools' && sudo yum install curl file git -y
+echo -ne '\n' | sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin/:$PATH"' >>~/.bashrc
+echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.bashrc
+echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.bashrc
+source  ~/.bashrc
 
 ## Use Brew to install the following packages:
 brew install tfenv tfsec terrascan
