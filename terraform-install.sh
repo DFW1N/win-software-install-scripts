@@ -1,3 +1,5 @@
+#!/bin/bash -e
+
 ## Install yum-utils
 yum install -y yum-utils
 
